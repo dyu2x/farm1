@@ -54,7 +54,7 @@ export const FishCareBlog: React.FC<FishCareBlogProps> = ({
             Fish Care Guides & <span className="text-[#3D6E3D] dark:text-[#A8CDA8]">Interactive Tools</span>
           </h2>
           <p className="text-sm sm:text-base text-[#637863] dark:text-[#8FA38F]">
-            Expert aquaculture management protocols developed specifically for native Asian Walking Catfish (<em className="text-[#3D6E3D] dark:text-[#A8CDA8] font-serif">Clarias batrachus</em>) farming in Central Luzon.
+            Expert aquaculture management protocols developed specifically for native Asian Walking Catfish (<em className="text-[#3D6E3D] dark:text-[#A8CDA8] font-serif">Clarias batrachus</em>) farming in Capiz and Visayas.
           </p>
         </div>
 

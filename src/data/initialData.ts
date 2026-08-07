@@ -10,10 +10,10 @@ export const INITIAL_FARM_SETTINGS: FarmSettings = {
   farmName: 'Mesina Farms',
   tagline: 'Premium Clarias Batrachus Hatchery & Grower',
   species: 'Clarias batrachus (Philippine Native Walking Catfish / Hito)',
-  farmAddress: 'Megastation Access Road, Brgy. San Jose, Santa Rita 2002, Pampanga, Philippines',
+  farmAddress: 'Poblacion Norte, Ivisan 5805, Capiz, Philippines',
   coordinates: {
-    lat: 15.0003,
-    lng: 120.6152,
+    lat: 11.5317,
+    lng: 122.7032,
   },
   primaryEmail: 'support@mesina.farm',
   supportPhone: '+63 962 527 9820',
@@ -297,7 +297,7 @@ export const INITIAL_BLOG_ARTICLES: BlogArticle[] = [
       ## Key Water Parameters to Monitor Daily
 
       ### 1. pH Range (Ideal: 6.8 - 8.2)
-      In Santa Rita and greater Pampanga pond systems, rainwater acidity can cause soil pH to drop below 6.5. 
+      In Ivisan and greater Capiz pond systems, rainwater acidity can cause soil pH to drop below 6.5. 
       - **Symptom of low pH (<6.0):** Excessive mucus secretion, sluggish feeding.
       - **Correction:** Apply agricultural lime (calcium carbonate, $CaCO_3$) at $20$-$30\\text{ g/m}^2$.
 

@@ -90,10 +90,10 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
             Farm Location & Directions
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-black text-[#1A2E1A] dark:text-[#E2EFE2] tracking-tight">
-            Mesina Farms <span className="text-[#3D6E3D] dark:text-[#A8CDA8]">Pampanga Hatchery</span>
+            Mesina Farms <span className="text-[#3D6E3D] dark:text-[#A8CDA8]">Capiz Hatchery</span>
           </h1>
           <p className="text-sm sm:text-base text-[#637863] dark:text-[#8FA38F]">
-            Located along the Megastation access corridor in Santa Rita, Pampanga. Easily navigate using Google Maps, Apple Maps, or Waze for order pickup.
+            Located in Ivisan, Capiz, Philippines. Easily navigate using Google Maps, Apple Maps, or Waze for order pickup.
           </p>
         </div>
 
@@ -185,7 +185,7 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
                     Hatchery Address
                   </h2>
                   <p className="text-xs text-[#637863] dark:text-[#8FA38F]">
-                    Mesina Farms Pampanga
+                    Mesina Farms Capiz
                   </p>
                 </div>
               </div>

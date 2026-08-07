@@ -32,11 +32,11 @@ const GALLERY_SLIDES: GallerySlide[] = [
   {
     id: 'pond-facility',
     title: 'Bio-Secure Hatchery & Conditioned Water Ponds',
-    subtitle: 'Santa Rita, Pampanga Facility',
+    subtitle: 'Ivisan, Capiz Facility',
     category: 'Hatchery Facilities',
     imageUrl: pondImg,
     description: 'Our bio-secure concrete and earthen conditioning ponds maintain strict pH, dissolved oxygen, and water purity for optimal fingerling vigor before packing.',
-    tags: ['Water Conditioning', 'Bio-Security', 'Santa Rita Farm']
+    tags: ['Water Conditioning', 'Bio-Security', 'Ivisan Farm']
   },
   {
     id: 'starter-size',

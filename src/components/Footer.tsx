@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
           <div className="space-y-4">
             <Logo size="lg" />
             <p className="text-xs text-[#8FA38F] leading-relaxed pt-2">
-              Mesina Farms is Pampanga’s premier hatchery and grower specializing in high-viability <em className="text-[#A8CDA8] font-serif">Clarias batrachus</em> (Asian Walking Catfish / Native Hito) fingerlings.
+              Mesina Farms is Capiz’s premier hatchery and grower specializing in high-viability <em className="text-[#A8CDA8] font-serif">Clarias batrachus</em> (Asian Walking Catfish / Native Hito) fingerlings.
             </p>
             <div className="flex items-center gap-2 text-xs font-semibold text-[#A8CDA8] bg-[#1E341E] p-2.5 rounded-xl border border-[#2D422D]">
               <ShieldCheck className="w-4 h-4 text-[#A8CDA8] flex-shrink-0" />
@@ -115,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ settings, onNavigate }) => {
         {/* Bottom Bar — No Direct Admin Link in Footer */}
         <div className="pt-8 border-t border-[#2D422D] flex flex-col sm:flex-row items-center justify-between text-xs text-[#8FA38F] gap-4">
           <div>
-            © {new Date().getFullYear()} Mesina Farms. All rights reserved. Santa Rita, Pampanga, Philippines.
+            © {new Date().getFullYear()} Mesina Farms. All rights reserved. Ivisan, Capiz, Philippines.
           </div>
           <div className="flex items-center gap-1">
             <span>Quality • Sustainability • Excellence</span>

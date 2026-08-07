@@ -54,7 +54,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Top Location Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#3D6E3D]/20 border border-[#3D6E3D]/40 text-[#A8CDA8] text-xs font-semibold backdrop-blur-md">
               <MapPin className="w-4 h-4 text-[#A8CDA8]" />
-              <span>Santa Rita, Pampanga, Philippines</span>
+              <span>Ivisan, Capiz, Philippines</span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#A8CDA8]"></span>
               <span className="text-[#C5D8C5] font-normal">Clarias Batrachus Hatchery</span>
             </div>
@@ -66,7 +66,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Description */}
             <p className="text-base sm:text-lg text-[#C5D8C5] max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
-              Mesina Farms produces high-viability, disease-resistant Asian Walking Catfish (<em className="text-[#A8CDA8] font-serif">Clarias batrachus</em> / native hito) fingerlings. Grown with strict bio-security in Santa Rita, Pampanga for commercial growers across Central Luzon and nationwide.
+              Mesina Farms produces high-viability, disease-resistant Asian Walking Catfish (<em className="text-[#A8CDA8] font-serif">Clarias batrachus</em> / native hito) fingerlings. Grown with strict bio-security in Ivisan, Capiz for commercial growers across Visayas and nationwide.
             </p>
 
             {/* Feature Pills */}
