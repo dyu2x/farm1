@@ -193,33 +193,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         </div>
       </div>
-
-      {/* Real-time Inventory Ticker Bar */}
-      <div className="mt-12 border-y border-[#2D422D] bg-[#0E170E] py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-wrap items-center justify-around gap-6 text-xs text-[#C5D8C5]">
-          <div className="flex items-center gap-2 font-semibold text-[#A8CDA8]">
-            <Sparkles className="w-4 h-4" />
-            <span>LIVE HATCHERY STOCK MONITOR:</span>
-          </div>
-          {products.map((p) => {
-            const isLow = p.stockCount <= settings.lowStockThreshold;
-            return (
-              <div key={p.id} className="flex items-center gap-2">
-                <span className="font-medium text-[#C5D8C5]">{p.name} ({p.sizeInInches}):</span>
-                <span
-                  className={`px-2.5 py-0.5 rounded-md font-bold text-[11px] ${
-                    isLow
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                      : 'bg-[#3D6E3D]/30 text-[#A8CDA8] border border-[#3D6E3D]/50'
-                  }`}
-                >
-                  {p.stockCount.toLocaleString()} pcs {isLow ? '⚠️ LOW STOCK' : 'IN STOCK'}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </section>
   );
 };
