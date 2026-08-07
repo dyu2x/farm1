@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #F7F9F7;
+    --bg-card: #FFFFFF;
+    --bg-subtle: #EDF1ED;
+    --bg-accent: #E0E7E0;
+    --border-natural: #D1D9D1;
+    --border-natural-light: #E1E6E1;
+    
+    --text-heading: #1A2E1A;
+    --text-body: #2A3B2A;
+    --text-muted: #637863;
+    
+    --brand-primary: #3D6E3D;
+    --brand-hover: #2E572E;
+    --brand-active: #234523;
+    --brand-light: #EDF1ED;
+    --brand-badge-bg: #E0E7E0;
+    --brand-badge-text: #2A4E2A;
+  }
+
+  .dark {
+    --bg-canvas: #121E12;
+    --bg-card: #1A281A;
+    --bg-subtle: #1E2E1E;
+    --bg-accent: #233623;
+    --border-natural: #2D422D;
+    --border-natural-light: #243624;
+    
+    --text-heading: #E2EFE2;
+    --text-body: #C5D8C5;
+    --text-muted: #8FA38F;
+    
+    --brand-primary: #4E854E;
+    --brand-hover: #3D6E3D;
+    --brand-active: #2A4E2A;
+    --brand-light: #1E301E;
+    --brand-badge-bg: #1E341E;
+    --brand-badge-text: #A8CDA8;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+

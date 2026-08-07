@@ -1,0 +1,10 @@
+{
+  "name": "Remix Mesina Farms - Catfish Hatchery \u0026 Grower",
+  "description": "Official website and admin dashboard for Mesina Farms catfish hatchery in Hermosa, Bataan. Featuring product catalog for Clarias batrachus fingerlings, real-time stock monitoring, order inquiry system, fish care guides, and location maps.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
