@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   MapPin,
   Navigation,
@@ -9,7 +9,6 @@ import {
   ShieldCheck,
   ExternalLink,
   RefreshCw,
-  Layers,
   Smartphone
 } from 'lucide-react';
 import { FarmSettings } from '../types';
@@ -19,71 +18,10 @@ interface LocationMapProps {
 }
 
 export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<any>(null);
-
-  const [activeMapTab, setActiveMapTab] = useState<'google' | 'google-directions' | 'leaflet'>('google');
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [distanceKm, setDistanceKm] = useState<number | null>(null);
   const [locating, setLocating] = useState<boolean>(false);
   const [locError, setLocError] = useState<string | null>(null);
-
-  // Initialize Leaflet Map when Leaflet tab is active
-  useEffect(() => {
-    if (activeMapTab !== 'leaflet') return;
-    if (!mapContainerRef.current) return;
-    if (mapInstanceRef.current) return;
-
-    const L = (window as any).L;
-    if (!L) return;
-
-    const farmLat = settings.coordinates.lat;
-    const farmLng = settings.coordinates.lng;
-
-    const map = L.map(mapContainerRef.current, {
-      center: [farmLat, farmLng],
-      zoom: 14,
-      scrollWheelZoom: false,
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors | Mesina Farms Pampanga',
-      maxZoom: 19,
-    }).addTo(map);
-
-    const customIcon = L.divIcon({
-      className: 'custom-leaflet-marker',
-      html: `
-        <div style="background-color: #3D6E3D; color: white; padding: 8px; border-radius: 50%; border: 3px solid white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; width: 44px; height: 44px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 10c0 6-8 12-8 12s-8-6-8-10a8 8 0 0 1 16 0Z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-        </div>
-      `,
-      iconSize: [44, 44],
-      iconAnchor: [22, 44],
-      popupAnchor: [0, -44],
-    });
-
-    const marker = L.marker([farmLat, farmLng], { icon: customIcon }).addTo(map);
-    marker.bindPopup(`
-      <div style="font-family: sans-serif; text-align: center; padding: 4px;">
-        <strong style="color: #3D6E3D; font-size: 14px;">Mesina Farms Hatchery</strong><br/>
-        <span style="font-size: 11px; color: #475569;">Santa Rita, Pampanga</span><br/>
-        <span style="font-size: 10px; color: #2E572E; font-weight: bold;">Clarias Batrachus Hatchery</span>
-      </div>
-    `).openPopup();
-
-    mapInstanceRef.current = map;
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, [activeMapTab, settings]);
 
   // Haversine distance calculation in km
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -123,33 +61,6 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
           settings.coordinates.lng
         );
         setDistanceKm(dist);
-
-        // If Leaflet is active, update map view
-        const L = (window as any).L;
-        if (mapInstanceRef.current && L) {
-          const userIcon = L.divIcon({
-            className: 'custom-user-marker',
-            html: `
-              <div style="background-color: #2563eb; color: white; padding: 6px; border-radius: 50%; border: 2px solid white; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);">
-                <div style="width: 12px; height: 12px; background: white; border-radius: 50%;"></div>
-              </div>
-            `,
-            iconSize: [28, 28],
-            iconAnchor: [14, 14],
-          });
-
-          L.marker([uLat, uLng], { icon: userIcon })
-            .addTo(mapInstanceRef.current)
-            .bindPopup('Your Current Location')
-            .openPopup();
-
-          const bounds = L.latLngBounds([
-            [uLat, uLng],
-            [settings.coordinates.lat, settings.coordinates.lng],
-          ]);
-          mapInstanceRef.current.fitBounds(bounds, { padding: [50, 50] });
-        }
-
         setLocating(false);
       },
       (error) => {
@@ -167,9 +78,6 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
 
   // Google Maps Embedded Iframe Source
   const googleEmbedStandardUrl = `https://maps.google.com/maps?q=${settings.coordinates.lat},${settings.coordinates.lng}&hl=en&z=15&output=embed`;
-  const googleEmbedDirectionsUrl = userLocation
-    ? `https://maps.google.com/maps?saddr=${userLocation.lat},${userLocation.lng}&daddr=${settings.coordinates.lat},${settings.coordinates.lng}&hl=en&output=embed`
-    : `https://maps.google.com/maps?saddr=&daddr=${settings.coordinates.lat},${settings.coordinates.lng}&hl=en&output=embed`;
 
   return (
     <section id="location" className="py-12 lg:py-20 bg-[#F7F9F7] dark:bg-[#121E12] border-t border-[#D1D9D1] dark:border-[#2D422D]">
@@ -192,47 +100,14 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
         {/* Map & Direction Panel */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Interactive Google Maps Embed / Tabs */}
+          {/* Left Column: Embedded Google Maps */}
           <div className="lg:col-span-8 bg-white dark:bg-[#1A281A] rounded-3xl p-4 sm:p-6 border border-[#D1D9D1] dark:border-[#2D422D] shadow-xl overflow-hidden space-y-4">
             
-            {/* Embedded Map Control Tabs */}
+            {/* Embedded Map Header Indicator */}
             <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#D1D9D1] dark:border-[#2D422D]">
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setActiveMapTab('google')}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    activeMapTab === 'google'
-                      ? 'bg-[#3D6E3D] text-white shadow-md'
-                      : 'bg-[#EDF1ED] dark:bg-[#121E12] text-[#2A3B2A] dark:text-[#C5D8C5] hover:bg-[#E0E7E0]'
-                  }`}
-                >
-                  <MapPin className="w-3.5 h-3.5" />
-                  Google Maps Location
-                </button>
-
-                <button
-                  onClick={() => setActiveMapTab('google-directions')}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    activeMapTab === 'google-directions'
-                      ? 'bg-[#3D6E3D] text-white shadow-md'
-                      : 'bg-[#EDF1ED] dark:bg-[#121E12] text-[#2A3B2A] dark:text-[#C5D8C5] hover:bg-[#E0E7E0]'
-                  }`}
-                >
-                  <Navigation className="w-3.5 h-3.5" />
-                  Google Directions Mode
-                </button>
-
-                <button
-                  onClick={() => setActiveMapTab('leaflet')}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                    activeMapTab === 'leaflet'
-                      ? 'bg-[#3D6E3D] text-white shadow-md'
-                      : 'bg-[#EDF1ED] dark:bg-[#121E12] text-[#2A3B2A] dark:text-[#C5D8C5] hover:bg-[#E0E7E0]'
-                  }`}
-                >
-                  <Layers className="w-3.5 h-3.5" />
-                  OpenStreetMap
-                </button>
+              <div className="flex items-center gap-2 text-xs font-bold text-[#1A2E1A] dark:text-[#E2EFE2]">
+                <MapPin className="w-4 h-4 text-[#3D6E3D] dark:text-[#A8CDA8]" />
+                <span>Google Map Embedded Location</span>
               </div>
 
               <span className="text-[11px] font-semibold text-[#637863] dark:text-[#8FA38F]">
@@ -242,34 +117,14 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
 
             {/* Map Frame Container */}
             <div className="relative w-full h-[450px] rounded-2xl overflow-hidden bg-[#EDF1ED] dark:bg-[#121E12] border border-[#D1D9D1] dark:border-[#2D422D]">
-              {activeMapTab === 'google' && (
-                <iframe
-                  title="Mesina Farms Google Map"
-                  src={googleEmbedStandardUrl}
-                  className="w-full h-full border-0"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              )}
-
-              {activeMapTab === 'google-directions' && (
-                <iframe
-                  title="Mesina Farms Google Map Directions"
-                  src={googleEmbedDirectionsUrl}
-                  className="w-full h-full border-0"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              )}
-
-              {activeMapTab === 'leaflet' && (
-                <div
-                  ref={mapContainerRef}
-                  className="w-full h-full z-10"
-                ></div>
-              )}
+              <iframe
+                title="Mesina Farms Google Map"
+                src={googleEmbedStandardUrl}
+                className="w-full h-full border-0"
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
 
             {/* Location Discovery Action Bar */}
