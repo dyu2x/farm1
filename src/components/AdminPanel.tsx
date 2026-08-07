@@ -48,6 +48,13 @@ import {
   OrderStatus,
 } from '../types';
 
+import { ImageUploader } from './ImageUploader';
+import starterImg from '../assets/images/clarias_starter_1785996462634.jpg';
+import standardImg from '../assets/images/clarias_standard_1785996472204.jpg';
+import advanceImg from '../assets/images/clarias_advance_1785996482236.jpg';
+import jumboImg from '../assets/images/clarias_jumbo_1785996494324.jpg';
+import pondImg from '../assets/images/clarias_pond_water_1785996946806.jpg';
+
 interface AdminPanelProps {
   products: FingerlingProduct[];
   orders: InquiryOrder[];
@@ -69,7 +76,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   onUpdateSettings,
   onExitAdmin,
 }) => {
-  const [activeTab, setActiveTab] = useState<'inventory' | 'analytics' | 'orders' | 'reports' | 'settings'>('inventory');
+  const [activeTab, setActiveTab] = useState<'inventory' | 'analytics' | 'orders' | 'reports' | 'media' | 'settings'>('inventory');
 
   // New Fingerling Column/Size State
   const [showAddProductModal, setShowAddProductModal] = useState(false);
@@ -78,7 +85,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [newSizeCm, setNewSizeCm] = useState('');
   const [newStock, setNewStock] = useState<number>(10000);
   const [newBasePrice, setNewBasePrice] = useState<number>(3.50);
-  const [newImage, setNewImage] = useState('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80');
+  const [newImage, setNewImage] = useState(standardImg);
   const [newDesc, setNewDesc] = useState('');
 
   // Editing Product Image / Prices
@@ -92,7 +99,58 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [settingsEmail, setSettingsEmail] = useState(settings.primaryEmail);
   const [settingsPhone, setSettingsPhone] = useState(settings.supportPhone);
   const [settingsThreshold, setSettingsThreshold] = useState(settings.lowStockThreshold);
+  const [settingsLogo, setSettingsLogo] = useState(settings.logoUrl || pondImg);
   const [settingsSavedNotice, setSettingsSavedNotice] = useState(false);
+
+  // Preset Hatchery Photos
+  const presetHatcheryPhotos = [
+    { label: 'Starter 1.5"', url: starterImg },
+    { label: 'Standard 2.5"', url: standardImg },
+    { label: 'Advance 3.5"', url: advanceImg },
+    { label: 'Jumbo 4.5"', url: jumboImg },
+    { label: 'Pond Facility', url: pondImg },
+  ];
+
+  // Media Gallery Uploads State
+  const [uploadedGallery, setUploadedGallery] = useState<{ id: string; name: string; url: string; date: string }[]>(() => {
+    const saved = localStorage.getItem('mesina_admin_gallery_v1');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) { console.error(e); }
+    }
+    return [
+      { id: '1', name: 'Starter Fingerling Batch', url: starterImg, date: '2026-08-01' },
+      { id: '2', name: 'Standard Fingerling Batch', url: standardImg, date: '2026-08-01' },
+      { id: '3', name: 'Advance Fingerling Batch', url: advanceImg, date: '2026-08-01' },
+      { id: '4', name: 'Jumbo Size Stock', url: jumboImg, date: '2026-08-01' },
+      { id: '5', name: 'Hatchery Water Conditioning Pond', url: pondImg, date: '2026-08-01' },
+    ];
+  });
+
+  const [newGalleryImage, setNewGalleryImage] = useState('');
+  const [newGalleryName, setNewGalleryName] = useState('');
+  const [copiedMediaId, setCopiedMediaId] = useState<string | null>(null);
+
+  const handleAddMediaToGallery = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newGalleryImage) return;
+    const newItem = {
+      id: `media-${Date.now()}`,
+      name: newGalleryName.trim() || `Uploaded Farm Photo ${uploadedGallery.length + 1}`,
+      url: newGalleryImage,
+      date: new Date().toISOString().split('T')[0],
+    };
+    const updated = [newItem, ...uploadedGallery];
+    setUploadedGallery(updated);
+    localStorage.setItem('mesina_admin_gallery_v1', JSON.stringify(updated));
+    setNewGalleryImage('');
+    setNewGalleryName('');
+  };
+
+  const handleRemoveMedia = (id: string) => {
+    const updated = uploadedGallery.filter((item) => item.id !== id);
+    setUploadedGallery(updated);
+    localStorage.setItem('mesina_admin_gallery_v1', JSON.stringify(updated));
+  };
 
   // Check Low Stock Items
   const lowStockItems = products.filter((p) => p.stockCount <= settings.lowStockThreshold);
@@ -198,6 +256,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       primaryEmail: settingsEmail,
       supportPhone: settingsPhone,
       lowStockThreshold: Number(settingsThreshold),
+      logoUrl: settingsLogo,
     });
     setSettingsSavedNotice(true);
     setTimeout(() => setSettingsSavedNotice(false), 3000);
@@ -301,6 +360,21 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
           >
             <FileSpreadsheet className="w-4 h-4" />
             <span>Monthly Performance Reports</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('media')}
+            className={`px-4 py-2.5 rounded-xl font-bold text-xs flex items-center gap-2 transition-colors ${
+              activeTab === 'media'
+                ? 'bg-[#3D6E3D] text-white shadow-lg'
+                : 'bg-[#233623] text-[#8FA38F] hover:bg-[#2E572E] hover:text-[#E2EFE2]'
+            }`}
+          >
+            <Image className="w-4 h-4" />
+            <span>Media & Image Uploads</span>
+            <span className="px-1.5 py-0.5 text-[10px] bg-[#121E12] text-[#A8CDA8] font-bold rounded-full">
+              {uploadedGallery.length}
+            </span>
           </button>
 
           <button
@@ -438,18 +512,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           </button>
                         </div>
 
-                        {/* Image URL Input */}
-                        <div>
-                          <label className="block text-[11px] font-semibold text-[#8FA38F] mb-1">
-                            Product Image URL
-                          </label>
-                          <input
-                            type="text"
-                            value={editImage}
-                            onChange={(e) => setEditImage(e.target.value)}
-                            className="w-full bg-[#1A281A] border border-[#2D422D] rounded-xl px-3 py-2 text-xs font-mono text-white outline-none focus:border-[#3D6E3D]"
-                          />
-                        </div>
+                        {/* Image Uploader Input */}
+                        <ImageUploader
+                          label="Upload / Change Product Photo"
+                          value={editImage}
+                          onChange={setEditImage}
+                          presetImages={presetHatcheryPhotos}
+                        />
 
                         {/* Stock Input */}
                         <div>
@@ -741,12 +810,135 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
           </div>
         )}
 
-        {/* TAB 5: FARM SETTINGS PANEL */}
+        {/* TAB 5: MEDIA & IMAGE UPLOADS MANAGER */}
+        {activeTab === 'media' && (
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <h2 className="font-serif font-black text-2xl text-[#E2EFE2]">
+                  Farm Media & Photo Upload Manager
+                </h2>
+                <p className="text-xs text-[#8FA38F]">
+                  Upload new photos of fingerlings, water conditioning ponds, or hatchery facilities from your device.
+                </p>
+              </div>
+            </div>
+
+            {/* Upload Box Card */}
+            <div className="bg-[#1A281A] rounded-3xl p-6 border border-[#2D422D] shadow-xl space-y-4">
+              <h3 className="font-serif font-bold text-lg text-[#E2EFE2] flex items-center gap-2">
+                <Image className="w-5 h-5 text-[#A8CDA8]" />
+                Upload New Image File to Farm Gallery
+              </h3>
+
+              <form onSubmit={handleAddMediaToGallery} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#8FA38F] mb-1">
+                      Photo Title / Caption
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Standard Fingerlings Batch 4"
+                      value={newGalleryName}
+                      onChange={(e) => setNewGalleryName(e.target.value)}
+                      className="w-full bg-[#121E12] border border-[#2D422D] rounded-xl p-3 text-xs font-semibold text-white outline-none focus:border-[#3D6E3D]"
+                    />
+                  </div>
+
+                  <ImageUploader
+                    label="Select or Drag Image File"
+                    value={newGalleryImage}
+                    onChange={setNewGalleryImage}
+                    presetImages={presetHatcheryPhotos}
+                  />
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    disabled={!newGalleryImage}
+                    className="px-6 py-2.5 rounded-xl bg-[#3D6E3D] hover:bg-[#2E572E] text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 disabled:opacity-50"
+                  >
+                    <Plus className="w-4 h-4" /> Save Photo to Admin Gallery
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Gallery Grid */}
+            <div className="bg-[#1A281A] rounded-3xl p-6 border border-[#2D422D] space-y-4">
+              <div className="flex items-center justify-between border-b border-[#2D422D] pb-3">
+                <h3 className="font-serif font-bold text-lg text-[#E2EFE2]">
+                  Stored Hatchery Photos ({uploadedGallery.length})
+                </h3>
+                <span className="text-xs text-[#8FA38F]">Available for product columns & website</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {uploadedGallery.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-[#121E12] rounded-2xl border border-[#2D422D] p-3 space-y-3 overflow-hidden group hover:border-[#3D6E3D] transition-all"
+                  >
+                    <div className="relative h-44 rounded-xl overflow-hidden bg-[#1A281A]">
+                      <img
+                        src={item.url}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        referrerPolicy="no-referrer"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveMedia(item.id)}
+                        className="absolute top-2 right-2 p-1.5 rounded-lg bg-red-950/80 hover:bg-red-900 text-red-300 transition-colors"
+                        title="Delete photo"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="font-bold text-xs text-[#E2EFE2] truncate">{item.name}</div>
+                      <div className="text-[10px] text-[#8FA38F]">Uploaded on {item.date}</div>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#2D422D]/60 flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(item.url);
+                          setCopiedMediaId(item.id);
+                          setTimeout(() => setCopiedMediaId(null), 2000);
+                        }}
+                        className="px-3 py-1.5 rounded-lg bg-[#233623] hover:bg-[#2E572E] text-[#C5D8C5] text-[11px] font-bold transition-colors flex items-center gap-1.5 w-full justify-center"
+                      >
+                        {copiedMediaId === item.id ? (
+                          <>
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                            <span>URL Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Download className="w-3.5 h-3.5 text-[#A8CDA8]" />
+                            <span>Copy Image Link</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 6: FARM SETTINGS PANEL */}
         {activeTab === 'settings' && (
           <div className="max-w-2xl bg-[#1A281A] rounded-3xl p-6 border border-[#2D422D] space-y-6">
             <div>
               <h2 className="font-serif font-black text-2xl text-[#E2EFE2]">Farm Settings & Contact Details</h2>
-              <p className="text-xs text-[#8FA38F]">Update farm address, primary contact email, phone number, and stock alert limits directly.</p>
+              <p className="text-xs text-[#8FA38F]">Update farm address, primary contact email, phone number, logo, and stock alert limits directly.</p>
             </div>
 
             {settingsSavedNotice && (
@@ -757,6 +949,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             )}
 
             <form onSubmit={handleSaveSettings} className="space-y-4">
+              <ImageUploader
+                label="Upload Farm Logo or Hatchery Header Image"
+                value={settingsLogo}
+                onChange={setSettingsLogo}
+                presetImages={presetHatcheryPhotos}
+              />
+
               <div>
                 <label className="block text-xs font-semibold text-[#8FA38F] mb-1">
                   Farm Physical Address
@@ -830,7 +1029,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
       {/* Add New Column / Fingerling Size Modal */}
       {showAddProductModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md animate-in fade-in">
-          <div className="bg-[#1A281A] rounded-3xl max-w-lg w-full p-6 border border-[#2D422D] shadow-2xl space-y-4">
+          <div className="bg-[#1A281A] rounded-3xl max-w-lg w-full p-6 border border-[#2D422D] shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center pb-3 border-b border-[#2D422D]">
               <h3 className="font-serif font-black text-xl text-[#E2EFE2]">Add New Fingerling Size / Column</h3>
               <button onClick={() => setShowAddProductModal(false)} className="text-[#8FA38F] hover:text-white">
@@ -899,15 +1098,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 </div>
               </div>
 
-              <div>
-                <label className="block font-semibold text-[#8FA38F] mb-1">Product Image URL</label>
-                <input
-                  type="text"
-                  value={newImage}
-                  onChange={(e) => setNewImage(e.target.value)}
-                  className="w-full bg-[#121E12] border border-[#2D422D] rounded-xl p-2.5 text-white font-mono text-[11px] outline-none focus:border-[#3D6E3D]"
-                />
-              </div>
+              <ImageUploader
+                label="Product Photo Upload"
+                value={newImage}
+                onChange={setNewImage}
+                presetImages={presetHatcheryPhotos}
+              />
 
               <div>
                 <label className="block font-semibold text-[#8FA38F] mb-1">Description</label>
