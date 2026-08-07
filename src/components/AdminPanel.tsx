@@ -90,7 +90,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   >([
     {
       id: 'm-1',
-      title: 'Santa Rita Water Conditioning Pond',
+      title: 'Ivisan Water Conditioning Pond',
       category: 'Hatchery Facilities',
       imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
       uploadDate: '2026-08-01'
@@ -234,7 +234,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
         { minQty: 1001, maxQty: 5000, pricePerPc: newBasePrice * 0.9 },
         { minQty: 5001, maxQty: null, pricePerPc: newBasePrice * 0.8 },
       ],
-      description: newDesc || `${newName} Clarias batrachus fingerlings grown in Santa Rita hatchery.`,
+      description: newDesc || `${newName} Clarias batrachus fingerlings grown in Ivisan hatchery.`,
       growthPeriodDays: 90,
       survivalRateEstimate: '97 - 99%',
       bestFor: 'Grow-out ponds and tanks',
@@ -286,7 +286,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               Mesina Farms • Admin Portal
             </div>
             <div className="text-[11px] text-[#8FA38F]">
-              Direct Route Management (/connect/admin) • Santa Rita, Pampanga
+              Direct Route Management (/connect/admin) • Ivisan, Capiz, Philippines
             </div>
           </div>
         </div>

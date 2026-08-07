@@ -111,7 +111,7 @@ export const LocationMap: React.FC<LocationMapProps> = ({ settings }) => {
               </div>
 
               <span className="text-[11px] font-semibold text-[#637863] dark:text-[#8FA38F]">
-                GPS: {settings.coordinates.lat.toFixed(4)}°N, {settings.coordinates.lng.toFixed(4)}°E
+                GPS: {settings.coordinates.lat.toFixed(6)}°N, {settings.coordinates.lng.toFixed(6)}°E
               </span>
             </div>
 

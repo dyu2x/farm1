@@ -168,33 +168,19 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                 className="group bg-white dark:bg-[#1A281A] rounded-2xl border border-[#D1D9D1] dark:border-[#2D422D] hover:border-[#3D6E3D] shadow-md hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden"
               >
                 {/* Product Image & Badge Header */}
-                <div className="relative h-52 overflow-hidden bg-[#EDF1ED] dark:bg-[#121E12]">
+                <div className="relative h-48 overflow-hidden bg-[#EDF1ED] dark:bg-[#121E12]">
                   <img
                     src={product.image}
                     alt={`${product.name} - Clarias batrachus`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#121E12]/80 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#121E12]/85 via-transparent to-transparent"></div>
 
                   {/* Size Pill */}
-                  <div className="absolute top-3 left-3 bg-[#121E12]/90 backdrop-blur-md text-white font-bold text-xs px-3 py-1 rounded-full border border-[#2D422D] shadow-md">
-                    {product.sizeInInches} ({product.sizeInCm})
-                  </div>
-
-                  {/* Stock Status Pill */}
-                  <div className="absolute top-3 right-3">
-                    {isLowStock ? (
-                      <span className="bg-amber-500/90 backdrop-blur-md text-slate-950 font-black text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-                        <AlertCircle className="w-3 h-3" />
-                        Low Stock ({product.stockCount.toLocaleString()})
-                      </span>
-                    ) : (
-                      <span className="bg-[#3D6E3D]/90 backdrop-blur-md text-white font-bold text-[10px] uppercase px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-                        <Check className="w-3 h-3" />
-                        In Stock ({product.stockCount.toLocaleString()})
-                      </span>
-                    )}
+                  <div className="absolute top-3 left-3 bg-[#121E12]/90 backdrop-blur-md text-white font-bold text-xs px-3 py-1 rounded-full border border-[#2D422D] shadow-md flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 text-[#A8CDA8]" />
+                    <span>{product.sizeInInches} ({product.sizeInCm})</span>
                   </div>
 
                   {/* Title overlay */}
@@ -210,6 +196,25 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
 
                 {/* Card Content & Pricing Tiers */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  {/* Stock Availability Indicator (Relocated for clean visual separation) */}
+                  <div className="flex items-center justify-between text-xs pb-2 border-b border-[#D1D9D1] dark:border-[#2D422D]">
+                    <span className="text-[11px] font-bold text-[#637863] dark:text-[#8FA38F] uppercase tracking-wider flex items-center gap-1.5">
+                      <Package className="w-3.5 h-3.5 text-[#3D6E3D] dark:text-[#A8CDA8]" />
+                      Live Stock:
+                    </span>
+                    {isLowStock ? (
+                      <span className="bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-bold text-[11px] flex items-center gap-1">
+                        <AlertCircle className="w-3 h-3 text-amber-600 dark:text-amber-400" />
+                        {product.stockCount.toLocaleString()} pcs (Low)
+                      </span>
+                    ) : (
+                      <span className="bg-[#3D6E3D]/15 text-[#2A4E2A] dark:text-[#A8CDA8] border border-[#3D6E3D]/30 px-2.5 py-0.5 rounded-full font-bold text-[11px] flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5 text-[#3D6E3D] dark:text-[#A8CDA8]" />
+                        {product.stockCount.toLocaleString()} pcs Available
+                      </span>
+                    )}
+                  </div>
+
                   {/* Tiered Price Table */}
                   <div className="bg-[#EDF1ED] dark:bg-[#121E12] p-3 rounded-xl border border-[#D1D9D1] dark:border-[#2D422D] space-y-1.5">
                     <div className="text-[11px] font-semibold text-[#637863] dark:text-[#8FA38F] uppercase tracking-wider flex justify-between">

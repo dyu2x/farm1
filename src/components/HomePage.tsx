@@ -218,10 +218,10 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="space-y-3 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-[#3D6E3D] dark:text-[#A8CDA8] bg-[#E0E7E0] dark:bg-[#1E341E] px-3 py-1 rounded-full border border-[#D1D9D1] dark:border-[#2D422D]">
               <MapPin className="w-3.5 h-3.5" />
-              <span>Pampanga Hatchery Facility</span>
+              <span>Capiz Hatchery Facility</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-black text-[#1A2E1A] dark:text-[#E2EFE2]">
-              Visit Farm in Santa Rita, Pampanga
+              Visit Farm in Ivisan, Capiz, Philippines
             </h2>
             <p className="text-xs sm:text-sm text-[#637863] dark:text-[#8FA38F] max-w-xl">
               Open Monday to Saturday for order pickups, water parameter consultations, and commercial grower inquiries.

@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden md:inline-block text-[#4E684E]">|</span>
             <span className="hidden md:inline-flex items-center gap-1.5 text-[#C5D8C5]">
               <MapPin className="w-3.5 h-3.5 text-[#A8CDA8]" />
-              Santa Rita, Pampanga, Philippines
+              Ivisan, Capiz, Philippines
             </span>
           </div>
 

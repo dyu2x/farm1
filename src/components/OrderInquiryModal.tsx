@@ -26,8 +26,8 @@ export const OrderInquiryModal: React.FC<OrderInquiryModalProps> = ({
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [townCity, setTownCity] = useState('Santa Rita');
-  const [province, setProvince] = useState('Pampanga');
+  const [townCity, setTownCity] = useState('Ivisan');
+  const [province, setProvince] = useState('Capiz');
   const [deliveryOption, setDeliveryOption] = useState<'pickup' | 'delivery'>('pickup');
   const [preferredDate, setPreferredDate] = useState('');
   const [notes, setNotes] = useState('');
@@ -158,7 +158,7 @@ export const OrderInquiryModal: React.FC<OrderInquiryModalProps> = ({
               </div>
 
               <p className="text-xs text-[#637863] dark:text-[#8FA38F] leading-relaxed max-w-md mx-auto">
-                Our farm manager at Santa Rita, Pampanga will verify stock availability and call you at <strong className="text-[#1A2E1A] dark:text-[#E2EFE2]">{submittedOrder.phone}</strong> shortly to finalize oxygen packaging and schedule.
+                Our farm manager at Ivisan, Capiz will verify stock availability and call you at <strong className="text-[#1A2E1A] dark:text-[#E2EFE2]">{submittedOrder.phone}</strong> shortly to finalize oxygen packaging and schedule.
               </p>
 
               {/* Direct Communication Action Buttons */}
@@ -317,7 +317,7 @@ export const OrderInquiryModal: React.FC<OrderInquiryModalProps> = ({
                             required
                             value={townCity}
                             onChange={(e) => setTownCity(e.target.value)}
-                            placeholder="Santa Rita"
+                            placeholder="Ivisan"
                             className="w-full bg-[#F7F9F7] dark:bg-[#121E12] border border-[#D1D9D1] dark:border-[#2D422D] rounded-xl px-3 py-2.5 text-xs font-semibold outline-none focus:border-[#3D6E3D] text-[#1A2E1A] dark:text-[#E2EFE2]"
                           />
                           <input
@@ -325,7 +325,7 @@ export const OrderInquiryModal: React.FC<OrderInquiryModalProps> = ({
                             required
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
-                            placeholder="Pampanga"
+                            placeholder="Capiz"
                             className="w-full bg-[#F7F9F7] dark:bg-[#121E12] border border-[#D1D9D1] dark:border-[#2D422D] rounded-xl px-3 py-2.5 text-xs font-semibold outline-none focus:border-[#3D6E3D] text-[#1A2E1A] dark:text-[#E2EFE2]"
                           />
                         </div>

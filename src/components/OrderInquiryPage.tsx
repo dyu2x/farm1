@@ -51,8 +51,8 @@ export const OrderInquiryPage: React.FC<OrderInquiryPageProps> = ({
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [townCity, setTownCity] = useState('Santa Rita');
-  const [province, setProvince] = useState('Pampanga');
+  const [townCity, setTownCity] = useState('Ivisan');
+  const [province, setProvince] = useState('Capiz');
   const [deliveryOption, setDeliveryOption] = useState<'pickup' | 'delivery'>('pickup');
   const [preferredDate, setPreferredDate] = useState('');
   const [notes, setNotes] = useState('');
@@ -129,7 +129,7 @@ export const OrderInquiryPage: React.FC<OrderInquiryPageProps> = ({
             Order Inquiry & <span className="text-[#3D6E3D] dark:text-[#A8CDA8]">Reservation</span>
           </h1>
           <p className="text-sm sm:text-base text-[#637863] dark:text-[#8FA38F]">
-            Reserve your batch of high-viability <em className="text-[#3D6E3D] dark:text-[#A8CDA8] font-serif">Clarias batrachus</em> fingerlings directly from Mesina Farms in Santa Rita, Pampanga.
+            Reserve your batch of high-viability <em className="text-[#3D6E3D] dark:text-[#A8CDA8] font-serif">Clarias batrachus</em> fingerlings directly from Mesina Farms in Ivisan, Capiz, Philippines.
           </p>
         </div>
 

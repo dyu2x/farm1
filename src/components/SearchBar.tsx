@@ -59,7 +59,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   const quickLinks = [
     { label: 'Starter Fingerlings (1.0-1.5 in)', action: () => onNavigate('catalog') },
-    { label: 'Farm Location in Santa Rita, Pampanga', action: () => onNavigate('location') },
+    { label: 'Farm Location in Ivisan, Capiz, Philippines', action: () => onNavigate('location') },
     { label: 'Order Inquiry Form', action: () => onNavigate('catalog') },
     { label: 'Fish Care Feeding Guide', action: () => onNavigate('blog') },
     { label: 'Customer Support (+63 962 527 9820)', action: () => onNavigate('location') },
@@ -127,7 +127,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <div className="py-12 text-center text-[#637863] dark:text-[#8FA38F]">
               <HelpCircle className="w-10 h-10 mx-auto text-[#637863] dark:text-[#8FA38F] mb-2" />
               <p className="font-medium text-base">No matching catalog items or guides found</p>
-              <p className="text-sm text-[#637863] dark:text-[#8FA38F] mt-1">Try searching for "starter", "jumbo", "water quality", or "Santa Rita"</p>
+              <p className="text-sm text-[#637863] dark:text-[#8FA38F] mt-1">Try searching for "starter", "jumbo", "water quality", or "Ivisan Capiz"</p>
             </div>
           )}
 
